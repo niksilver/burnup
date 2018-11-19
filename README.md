@@ -29,7 +29,6 @@ This is a way of creating a burn-up chart with Google Sheets.
 
 - [Overview](#overview)
 - [Setup](#setup)
-- [Basic information](#basic-information)
 - [Tracking changes](#tracking-changes)
 - [Creating the burn-up data](#creating-the-burn-up-data)
 - [The burn-up chart](#the-burn-up-chart)
@@ -82,7 +81,7 @@ row in the table. Here are some columns you’ll want to include:
 The size and the “done size” are what go into the burn-up
 chart. They give us our Actual and Scope lines respectively.
 
-## Basic information
+<img align="center" src="docs/basic-data.png">
 
 But for this spreadsheet, as well as those obvious fields there are three things you must include:
 
