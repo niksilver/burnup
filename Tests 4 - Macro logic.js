@@ -19,6 +19,14 @@ function testMacroLogic(test) {
     arrayBWithDates = [ 'One', new Date('3 Apr 2018'), 33 ]
     arrayBWithNoDates = [[ 'One', '', 33 ]]
     t.equal(arrayBWithNoDates, copyWithoutDates(arrayBWithDates), 'Should be able to copy a 1D array dropping dates, and making it 2x2')
+
+    basicValueC = 42;
+    t.equal([[basicValueC]], copyWithoutDates(basicValueC), 'A non-date value should become the same in a 2D array')
+
+    basicValueD = new Date('5 Nov 2018');
+    t.equal([['']], copyWithoutDates(basicValueD), 'A date value should become a 2D array with just an empty string in it')
+
+
   })
 
 }
