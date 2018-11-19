@@ -7,7 +7,8 @@ with Google Sheets.
 
 # Tl;dr
 
-Simply go to the original spreadsheet,
+Simply go to
+[the original spreadsheet](https://docs.google.com/spreadsheets/d/1NiK41B1cRxZ7RFlH-ylzcG1W5LduEf-dkzd048hM_fE/edit#gid=775539403),
 make your own copy using `File > Make a copy`, and name it as you like.
 Then close the original and play around with your new burn-up spreadsheet.
 
@@ -21,7 +22,7 @@ changes in the data (for tracing why things changed) then it’s
 surprisingly tricky.
 
 If you’re working on a fairly big project then a specialised tool
-like Jira or Mingle may well do the job for you. But if your project is
+like Jira or TFS may well do the job for you. But if your project is
 more modest then the cost, setup and maintenance of such a tool may be excessive.
 
 This is a way of creating a burn-up chart with Google Sheets.
@@ -31,7 +32,6 @@ This is a way of creating a burn-up chart with Google Sheets.
 - [Tracking changes](#tracking-changes)
 - [Creating the burn-up data](#creating-the-burn-up-data)
 - [The burn-up chart](#the-burn-up-chart)
-- [Top tip for greater reliability](#top-tip-for-greater-reliability)
 - [More tips and tricks](#more-tips-and-tricks)
 
 ## Overview
@@ -50,15 +50,14 @@ Now for the details…
 <image align="right" src="docs/make-a-copy.png">
 
 The first thing you need is the basic
-spreadsheet. You need to copy my original because it comes with a
+spreadsheet. You need to copy
+[my original spreadsheet](https://docs.google.com/spreadsheets/d/1NiK41B1cRxZ7RFlH-ylzcG1W5LduEf-dkzd048hM_fE/edit#gid=775539403)
+because it comes with a
 script. So go to the original sheet, click `File > Make a copy` and
 name it as you like. Then close the original.
 
-You’ll see there are four sheets: User stories, Burn-up, Burn-up
-with smarter formulas, and Tests. You only need to keep the Tests
-sheet if you want to see how I’ve written automated tests against
-the script. But you probably don’t, so the first thing you can
-do is delete that Tests sheet.
+You’ll see there several sheets including
+README, User stories and Burn-up. 
 
 If you would like see the code behind the sheet then you can go to
 `Tools > Script editor` and you’ll see the code.
@@ -166,57 +165,52 @@ the historical data, but only as the data stood on the given date
 (19 March, then 20 March, etc).
 
 This is a new function, `sumValid`, which is created by the script
-behind the spreadsheet. It takes the following parameters: first, the
-date we’re currently interested in; second the entire historical
-data table, including its header; and finally the names in the
-header row for the ID, the “valid from” date and the “size
+behind the spreadsheet. It takes the following parameters:
+
+# the dates we’re currently interested in (as a column);
+# the entire historical data table, including its header; and finally
+# the names in the header row for the ID, the “valid from” date and the “size
+
 estimate” columns respectively.
 
 With this formula we’re saying: sum all the data that’s valid
-at the specified date, where this is the historical data and we
+at the specified dates, where this is the historical data and we
 can pick out each story, when it changed, and where this is the
 data to add up.
 
-So if `J11` contains the project start date, 19 March, and `A7:F30`
-is our historical data, then for calculating the scope for the
-first day of the project we might have a formula that reads:
+<img align="right" src="docs/smarter-formulas.png">
+
+`sumValid` will go down and
+fill in the values for all the dates. We must make sure those
+cells are blank though---only then can it fill them in; if not it
+will give a `#REF!` error.
+
+
+So if `A11:A24` contains the dates we want to chart in our
+Burn-up sheet, and `A6:F29`
+is our historical data in the User stories sheet,
+then for calculating the scope for all those dates
+we might have a formula that reads:
 
 ```
-=sumValid(J11, A7:F30, “Story ID”, “Valid from”, “Estimate”)
-```
-
-To get the data for the second day of the project (the cell
-immediately below that) we use exactly the same formula, but this
-time the first parameter points to `J12`, which is cell for 20 March.
-
-And then you can copy the formula down the column for every date until today.
-
-Of course if you copy or drag formulas then your cell references
-will change, so make sure you use `$` signs as appropriate. And if
-your historical data is on another sheet (as it is in our original
-spreadsheet) then again the cell references won’t look quite like
-this. In the original spreadsheet the formula is:
-
-```
-=sumValid($A11, ‘User stories’!$A$7:$F$30, “Story ID”, “Valid from”, “Estimate”)
+=sumValid(A11:A24, 'User stories'!A6:F29, “Story ID”, “Valid from”, “Estimate”)
 ```
 
 Now let’s suppose for the third column of the burn-up data we want
-to calculate work done as it was on each day. For this we use exactly
+to calculate work done as it was on each day.
+This is will the burning-up line on our chart.
+For this we use exactly
 the same formula, but this time the last parameter is “Work done”
 (or whatever we’ve called the column in the historical data).
 
 So for the first cell in the third column our formula might read:
 
 ```
-=sumValid(…, …, “Story ID”, “Valid from”, “Work done”)
+=sumValid(A11:A24, 'User stories'!A6:F29, “Story ID”, “Valid from”, “Work done”)
 ```
 
-where the cell references have been elided for clarity. Once again
-we can use this same formula all the way down the column. And once
-again we need to make sure we use $ signs appropriately, so the
-date parameter changes line by line, but the historical data range
-stays the same.
+Once again the `sumValid` formula will fill in the values all the way down.
+Don't forget to uses `$` signs approprately if you're copying forumulas.
 
 ## The burn-up chart
 
@@ -228,30 +222,6 @@ chart references the latest data, including those new lines you’ve
 just added.
 
 <img align="center" src="docs/burn-up-chart.png">
-
-## Top tip for greater reliability
-
-Although I’ve used a lot of words to describe this process, I
-hope that in practice you can see it’s pretty simple. But here’s
-another feature of `sumValid` that makes it even easier. Take a look
-at the other sheet, Burn-up with smarter formulas.
-
-<img align="right" src="docs/smarter-formulas.png">
-
-I’ve previously said that the first parameter of `sumValid` is the
-date we want to calculate a value for. But we can instead supply a
-date range. If we point to our entire column of dates then `sumValid`
-will not only calculate the value for the first date, it will also
-fill in the values for all the other dates. We must make sure those
-cells are blank though—only then can it fill them in; if not it
-will give a `#REF!` error.
-
-This is a really big benefit. It means we only need to worry about
-one formula for each line of the burn-up chart. When you extend
-your burn-up chart, or when you extend your historical data table,
-then you must update those formulas. But you’d have to do that
-anyway with the previous method, and there are more formulas to
-worry about there.
 
 ## More tips and tricks
 
