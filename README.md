@@ -69,10 +69,10 @@ You’ll see there several sheets including
 README, User stories and Burn-up. 
 
 If you would like see the code behind the sheet then you can go to
-`Tools > Script editor` and you’ll see the code.
+`Tools > Script editor`.
 
 Now we’ll walk through the the two tables, what they do, and how
-they work.  Basic historical data
+they work.
 
 The User stories sheet contains a table of our historical data—that
 is, our user stories as they change over time.
