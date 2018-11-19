@@ -7,7 +7,7 @@
     "macros": [{
       "menuName": "Duplicate row without dates",
       "functionName": "newDimRow",
-      "defaultShortcut": "Ctrl+Alt+Shift+2"
+      "defaultShortcut": "Ctrl+Alt+Shift+1"
     }]
   }
 }

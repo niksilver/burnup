@@ -480,13 +480,45 @@ function filterValidOneDate_(idate, validFroms, validTos, dataArray, condArray, 
   return out;
 }
 
+// ---------------------------------------------
+//
+// Macro code...
+//
+// ---------------------------------------------
+
 /**
- * Macro code...
+ * Duplicate the current row, and copy all its contents, except dates, which should become
+ * empty cells.
+ *
+ * Intended to be run as a macro.
  */
 
 function newDimRow() {
-  var ui = SpreadsheetApp.getUi();
-  var result = ui.alert('My title', 'My message goes here', ui.ButtonSet.YES_NO);
+
+  // Get the current cell, and then the data in the row of the current cell
+
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var cell = sheet.getCurrentCell();
+  var rowPos = cell.getRow(); // First row is 1
+  var colPos = cell.getColumn(); // First column is 1
+  var width = sheet.getLastColumn(); // Position of last column that has some content
+  var rowRange = sheet.getRange(rowPos, 1, 1, width); // A range that's just the row
+  var rowValues = rowRange.getValues(); // Just the data of the row
+
+  // Create an empty row below this one
+
+  sheet.insertRows(rowPos + 1);
+  var newRowRange = sheet.getRange(rowPos + 1, 1, 1, width); // Range of the new row
+
+  // Work out the new data and insert it
+
+  var newRowValues = copyWithoutDates(rowValues);
+  newRowRange.setValues(newRowValues);
+
+  // For the user's convenience, move the currently selected cell down into the new row
+
+  var newCell = sheet.getRange(rowPos + 1, colPos);
+  sheet.setCurrentCell(newCell);
 }
 
 /**
@@ -494,6 +526,7 @@ function newDimRow() {
  * @param arraz  The 2x2 array.
  * @returns  A copy of the original array, but with empty string instead of any dates.
  */
+
 function copyWithoutDates(arraz) {
   var arr2d = make2DArray(arraz);
   var out = [];
