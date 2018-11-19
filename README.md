@@ -169,16 +169,15 @@ behind the spreadsheet. It takes the following parameters:
 
 - the dates we’re currently interested in (as a column);
 - the entire historical data table, including its header; and finally
-- the names in the header row for the ID, the “valid from” date and the “size
-
-estimate” columns respectively.
+- the names in the header row for the ID, the “valid from” date and the
+  “size estimate” columns respectively.
 
 With this formula we’re saying: sum all the data that’s valid
 at the specified dates, where this is the historical data and we
 can pick out each story, when it changed, and where this is the
 data to add up.
 
-<img align="right" src="docs/smarter-formulas.png">
+<img align="center" src="docs/smarter-formulas.png">
 
 `sumValid` will go down and
 fill in the values for all the dates. We must make sure those
@@ -210,6 +209,7 @@ So for the first cell in the third column our formula might read:
 ```
 
 Once again the `sumValid` formula will fill in the values all the way down.
+
 Don't forget to uses `$` signs approprately if you're copying forumulas.
 
 ## The burn-up chart
@@ -241,6 +241,8 @@ Here are some other details that might be of interest…
 
 
 # Developing
+
+In case you fancy developing this further yourself...
 
 ## Setup
 
