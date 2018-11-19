@@ -479,3 +479,13 @@ function filterValidOneDate_(idate, validFroms, validTos, dataArray, condArray, 
 
   return out;
 }
+
+/**
+ * Macro code...
+ */
+
+function newDimRow() {
+  var ui = SpreadsheetApp.getUi();
+  var result = ui.alert('My title', 'My message goes here', ui.ButtonSet.YES_NO);
+}
+

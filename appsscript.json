@@ -2,5 +2,13 @@
   "timeZone": "Europe/London",
   "dependencies": {
   },
-  "exceptionLogging": "STACKDRIVER"
+  "exceptionLogging": "STACKDRIVER",
+  "sheets": {
+    "macros": [{
+      "menuName": "Duplicate row without dates",
+      "functionName": "newDimRow",
+      "defaultShortcut": "Ctrl+Alt+Shift+2"
+    }]
+  }
 }
+
