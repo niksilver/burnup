@@ -254,6 +254,9 @@ the Google Apps Script commandline tool. Then log in:
 % clasp login
 ```
 
+If `.clasp.json` exists make sure it's pointing to the right Google Apps Script script.
+Get the correct script ID by going to the script editor, then `File > Project properties`.
+
 ## Working with the code
 
 Pull the code down from Google if you think you're out of sync:
