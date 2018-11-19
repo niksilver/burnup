@@ -1,9 +1,9 @@
 # What is this?
 
-<img align="right" src="docs/burn-up-chart.png">
-
 This is a set of functions and macros to allow easier creation of burn-up charts
 with Google Sheets.
+
+<img align="right" src="docs/burn-up-chart.png">
 
 # Tl;dr
 
