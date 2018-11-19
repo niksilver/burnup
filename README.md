@@ -12,6 +12,17 @@ Simply go to
 make your own copy using `File > Make a copy`, and name it as you like.
 Then close the original and play around with your new burn-up spreadsheet.
 
+- [Basic use](#basic-use)
+  - [Overview](#overview)
+  - [Setup](#setup)
+  - [Tracking changes](#tracking-changes)
+  - [Using the shortcut key](#using-the-shortcut-key)
+  - [Creating the burn-up data](#creating-the-burn-up-data)
+  - [The burn-up chart](#the-burn-up-chart)
+  - [More tips and tricks](#more-tips-and-tricks)
+- [Developing](#developing)
+  - [Working with the code](#working-with-the-code)
+  - [Running the tests](#running-the-tests)
 
 # Basic use
 
@@ -26,13 +37,6 @@ like Jira or TFS may well do the job for you. But if your project is
 more modest then the cost, setup and maintenance of such a tool may be excessive.
 
 This is a way of creating a burn-up chart with Google Sheets.
-
-- [Overview](#overview)
-- [Setup](#setup)
-- [Tracking changes](#tracking-changes)
-- [Creating the burn-up data](#creating-the-burn-up-data)
-- [The burn-up chart](#the-burn-up-chart)
-- [More tips and tricks](#more-tips-and-tricks)
 
 ## Overview
 
@@ -142,6 +146,18 @@ to put changes in date order. It doesn’t matter. And if you
 change your mind later you can always re-order or sort the rows
 differently. The important thing is to keep the header at the top.
 
+## Using the shortcut key
+
+Because copying and tweaking a line is such a common action
+there's a keyboard shortcut for it: `Shift + Ctrl + Alt + 1`
+on PCs, or Shift + Option + Cmd + 1` on Macs.
+This will insert a copy of the current row just below it, and
+and it will remove all the dates to make sure you put the right
+ones in.
+
+You can also find this function in the menus:
+`Tools > Macros > Duplicate row without dates`.
+
 ## Creating the burn-up data
 
 <img align="right" src="docs/burn-up-data.png">
@@ -225,7 +241,7 @@ just added.
 
 ## More tips and tricks
 
-Here are some other details that might be of interest…
+Here are some other details that might be of interest...
 
 - The more data you have the slower the `sumValid` function gets.
   But for a project lasting a few weeks it should be fine.
@@ -251,10 +267,11 @@ install [clasp](https://codelabs.developers.google.com/codelabs/clasp/#0),
 the Google Apps Script commandline tool. Then log in:
 
 ```
-% clasp login
+clasp login
 ```
 
-If `.clasp.json` exists make sure it's pointing to the right Google Apps Script script.
+Edit `.clasp.json` to make sure it's pointing to the right Google Apps Script script
+(i.e. yours, not mine)..
 Get the correct script ID by going to the script editor, then `File > Project properties`.
 
 ## Working with the code
@@ -271,11 +288,14 @@ When you want to update Google, push your code:
 clasp push
 ```
 
+## Running the tests
+
 Before running the tests, first make sure you're in the script editor:
 from the spreadsheet go to `Tools > Script editor`.
 
-To run the tests in the script editor, first make sure you've got `Tests 0 - All.gs` open
-and click the `Play` icon (a triangle) and then click `View > Logs`.
+Then make sure you've got `Tests 0 - All.gs` open
+and click the `Play` icon (a triangle). This will run the tests.
+To view the results click `View > Logs`.
 
 ## References
 
