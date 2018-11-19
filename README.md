@@ -1,9 +1,17 @@
+# What is this?
+
+This is a set of functions and macros to allow easier creation of burn-up charts
+with Google Sheets. For detailed info see:
+
+- [How to use the basic capabilities](https://niksilver.com/2015/06/15/easy-burn-up-chart/);
+- [More advanced functions](https://niksilver.com/2016/08/02/burn-up-charts-with-google-sheets/)..
+
 # Developing
 
 ## Setup
 
 To set yourself up
-install [https://codelabs.developers.google.com/codelabs/clasp/#0](clasp),
+install [clasp](https://codelabs.developers.google.com/codelabs/clasp/#0),
 the Google Apps Script commandline tool. Then log in:
 
 ```
