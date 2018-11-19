@@ -22,6 +22,7 @@ function gastTestRunner() {
   testBasics(test)
   testTransformations(test)
   testBusinessLogic(test)
+  testMacroLogic(test)
 
   test.finish()
 

@@ -489,3 +489,20 @@ function newDimRow() {
   var result = ui.alert('My title', 'My message goes here', ui.ButtonSet.YES_NO);
 }
 
+/**
+ * Copy a 2x2 array, but replace any dates with blanks (empty strings).
+ * @param arraz  The 2x2 array.
+ * @returns  A copy of the original array, but with empty string instead of any dates.
+ */
+function copyWithoutDates(arraz) {
+  var out = [];
+  for (var i = 0; i < arraz.length; i++) {
+    var row = [];
+    for (var j = 0; j < arraz[i].length; j++) {
+      var val = isDate(arraz[i][j]) ? '' : arraz[i][j];
+      row.push(val);
+    }
+    out.push(row);
+  }
+  return out;
+}
