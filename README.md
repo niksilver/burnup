@@ -167,9 +167,9 @@ the historical data, but only as the data stood on the given date
 This is a new function, `sumValid`, which is created by the script
 behind the spreadsheet. It takes the following parameters:
 
-# the dates we’re currently interested in (as a column);
-# the entire historical data table, including its header; and finally
-# the names in the header row for the ID, the “valid from” date and the “size
+- the dates we’re currently interested in (as a column);
+- the entire historical data table, including its header; and finally
+- the names in the header row for the ID, the “valid from” date and the “size
 
 estimate” columns respectively.
 
