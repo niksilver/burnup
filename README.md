@@ -21,12 +21,13 @@ Then close the original and play around with your new burn-up spreadsheet.
   - [The burn-up chart](#the-burn-up-chart)
   - [More tips and tricks](#more-tips-and-tricks)
 - [Further functions](#further-functions)
- - [Get all values for a given date](#get-all-values-for-a-given-date)
- - [Filter values for a given date](#filter-values-for-a-given-date)
- - [Tip: Extra fields for better filtering](#tip-extra-fields-for-better-filtering)
+  - [Get all values for a given date](#get-all-values-for-a-given-date)
+  - [Filter values for a given date](#filter-values-for-a-given-date)
+  - [Tip: Extra fields for better filtering](#tip-extra-fields-for-better-filtering)
 - [Developing](#developing)
   - [Working with the code](#working-with-the-code)
   - [Running the tests](#running-the-tests)
+- [References](#references)
 
 # Basic use
 
@@ -405,7 +406,7 @@ Then make sure you've got `Tests 0 - All.gs` open
 and click the `Play` icon (a triangle). This will run the tests.
 To view the results click `View > Logs`.
 
-## References
+# References
 
 - [Google Apps Script reference for Sheets](https://developers.google.com/apps-script/reference/spreadsheet/)
 - [The GasT test framework used as the basis for the one here](https://github.com/zixia/gast/)
