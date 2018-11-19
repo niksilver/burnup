@@ -20,6 +20,10 @@ Then close the original and play around with your new burn-up spreadsheet.
   - [Creating the burn-up data](#creating-the-burn-up-data)
   - [The burn-up chart](#the-burn-up-chart)
   - [More tips and tricks](#more-tips-and-tricks)
+- [Further functions](#further-functions)
+ - [Get all values for a given date](#get-all-values-for-a-given-date)
+ - [Filter values for a given date](#filter-values-for-a-given-date)
+ - [Tip: Extra fields for better filtering](#tip-extra-fields-for-better-filtering)
 - [Developing](#developing)
   - [Working with the code](#working-with-the-code)
   - [Running the tests](#running-the-tests)
@@ -256,6 +260,110 @@ Here are some other details that might be of interest...
   So make sure the `sumValid` formulas encompass the latest historical data.
 
 
+# Further functions
+
+As well as `sumValid` there are some functions
+intended to help you get a better view of the work in progress at any moment in time.
+
+## Get all values for a given date
+
+This is useful if we want to get an easy view of our work as it
+was on any particular date. This can be a bit tricky normally,
+because the raw data lists every version of every user story,
+and different stories will change on different dates.
+
+The function `getValid` effectively says "For a given date get
+all the values of a given field". The parameters are:
+
+- The date in question;
+- Three parameters specifying the raw data:
+  - the range of the data (including the header row),
+  - the column name of the story ID,
+  - the column name of the date from which this row’s data is valid;
+- The column name of the field we want to show.
+
+Here’s an example from the demo spreadsheet. You can find it in the tab named Listing example.
+
+Our raw data looks like this:
+
+<img align="center" src="docs/1-raw-data.png">
+
+Let’s suppose we want to
+see the stories that were known on 29 June 2016. In particular
+we decide we want to list three fields: the story id, its name,
+and its estimate. That means we want to use a `getValid` forumula
+three times: once for the id, once for the name, and once for the
+estimate. Here’s what the first formula looks like:
+
+<img align="center" src="docs/2-getvalid-for-id.png">
+
+The formula itself uses the parameters we gave above: the date in
+question, the details of the raw data (which happen to be in a named
+range: `StoryDim`), and the name of the column we’re interested
+in---in this case Story ID. That cell, and all the cells below it,
+then fill up with all the story ids known on that date. Notice that
+story id 15 is missing, and if you look at the original spreadsheet
+you’ll see that’s because that story was introduced only at a
+later date.
+
+The next two columns contain formulas that are identical except for the last parameter:
+
+<img align="center" src="docs/3-getvalid-for-name.png">
+
+and
+
+<img align="center" src="docs/4-getvalid-for-estimate.png">
+
+Because all the formulas use the same data and the same date their
+outputs line up. So we can be sure (for example) that story id 4
+("Integrate with Muppex") was estimated as size 1 on the date
+in question. But if you change the date to 26 June or later then
+you’ll see its estimate changes.
+
+## Filter values for a given date
+
+Just getting the data is often good enough. But sometimes we want
+a filtered view. For example you might want to see all stories that
+weren’t yet done on a given date. While you can put a spreadsheet
+filter on the `getValid` results you can also use a dedicated
+formula: `filterValid`. This effectively says "For a given date get
+all the values of a given field, but filtered down to just those
+where a certain condition is met".
+
+The parameters for `filterValid` are just the same as before, but
+there are two extra ones at the end:
+
+- The date in question;
+- Three parameters specifying the raw data:
+  - the area of the data (including the header row),
+  - the column name of the story ID,
+  - the column name of the date from which this row’s data is valid;
+- The column name of the field we want to show;
+- The column name of the field we want to test;
+- The value that this field must be in order to pass the test.
+
+For example, if we want to show only those stories that weren’t
+done on a given date then we might test the Is done? field for
+value 0. We can see this in the demo spreadsheet in the tab named
+Filtering example:
+
+<img align="center" src="docs/5-filtervalid-for-id.png">
+
+The two cells next to it again have exactly the same formula,
+except the fifth parameter is replaced each time to show a different
+field (again: the name and the estimate). Obviously you can show
+any field(s) you like. In the screenshot above you can see some
+stories are missing: they are the ones that have been done.
+
+## Tip: Extra fields for better filtering
+
+Suppose we want to find “all stories that are in milestone 2 and
+not yet done”. If we’ve got a Milestone column and (of course)
+a Done? column then we can achieve this by adding a new column in
+our raw date with a calculation that simply says "milestone =
+2 and done = true". Then we can use `filterValid` to test the
+condition that this new column has the value True.
+
 # Developing
 
 In case you fancy developing this further yourself...
@@ -300,6 +408,7 @@ To view the results click `View > Logs`.
 ## References
 
 - [Google Apps Script reference for Sheets](https://developers.google.com/apps-script/reference/spreadsheet/)
+- [The GasT test framework used as the basis for the one here](https://github.com/zixia/gast/)
 - [Original article on the basic capabilities](https://niksilver.com/2015/06/15/easy-burn-up-chart/);
 - [Original article on more advanced functions](https://niksilver.com/2016/08/02/burn-up-charts-with-google-sheets/).
 
