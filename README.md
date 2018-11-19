@@ -361,7 +361,7 @@ stories are missing: they are the ones that have been done.
 Suppose we want to find “all stories that are in milestone 2 and
 not yet done”. If we’ve got a Milestone column and (of course)
 a Done? column then we can achieve this by adding a new column in
-our raw date with a calculation that simply says "milestone =
+our raw data with a calculation that simply says "milestone =
 2 and done = true". Then we can use `filterValid` to test the
 condition that this new column has the value True.
 
