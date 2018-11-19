@@ -495,14 +495,17 @@ function newDimRow() {
  * @returns  A copy of the original array, but with empty string instead of any dates.
  */
 function copyWithoutDates(arraz) {
+  var arr2d = make2DArray(arraz);
   var out = [];
-  for (var i = 0; i < arraz.length; i++) {
+
+  for (var i = 0; i < arr2d.length; i++) {
     var row = [];
-    for (var j = 0; j < arraz[i].length; j++) {
-      var val = isDate(arraz[i][j]) ? '' : arraz[i][j];
+    for (var j = 0; j < arr2d[i].length; j++) {
+      var val = isDate(arr2d[i][j]) ? '' : arr2d[i][j];
       row.push(val);
     }
     out.push(row);
   }
+
   return out;
 }
