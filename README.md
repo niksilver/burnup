@@ -155,7 +155,7 @@ differently. The important thing is to keep the header at the top.
 
 Because copying and tweaking a line is such a common action
 there's a keyboard shortcut for it: `Shift + Ctrl + Alt + 1`
-on PCs, or Shift + Option + Cmd + 1` on Macs.
+on PCs, or `Shift + Option + Cmd + 1` on Macs.
 This will insert a copy of the current row just below it, and
 and it will remove all the dates to make sure you put the right
 ones in.
