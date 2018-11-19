@@ -6,6 +6,13 @@ with Google Sheets. For detailed info see:
 - [How to use the basic capabilities](https://niksilver.com/2015/06/15/easy-burn-up-chart/);
 - [More advanced functions](https://niksilver.com/2016/08/02/burn-up-charts-with-google-sheets/)..
 
+# Tl;dr
+
+Simply go to the original spreadsheet,
+make your own copy using `File > Make a copy`, and name it as you like.
+Then close the original and play around with your new burn-up spreadsheet.
+
+
 # Basic use
 
 Burn-up charts are a great way to demonstrate progress against
@@ -42,9 +49,11 @@ Now for the details…
 
 ## Setup
 
-Make a copy of the spreadsheetThe first thing you need is the basic
+<image align="right" src="docs/make-a-copy.png">
+
+The first thing you need is the basic
 spreadsheet. You need to copy my original because it comes with a
-script. So go to the original sheet, click File > Make a copy and
+script. So go to the original sheet, click `File > Make a copy` and
 name it as you like. Then close the original.
 
 You’ll see there are four sheets: User stories, Burn-up, Burn-up
@@ -54,7 +63,7 @@ the script. But you probably don’t, so the first thing you can
 do is delete that Tests sheet.
 
 If you would like see the code behind the sheet then you can go to
-Tools > Script editor… and you’ll see the code.
+`Tools > Script editor` and you’ll see the code.
 
 Now we’ll walk through the the two tables, what they do, and how
 they work.  Basic historical data
