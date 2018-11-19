@@ -1,10 +1,9 @@
 # What is this?
 
-This is a set of functions and macros to allow easier creation of burn-up charts
-with Google Sheets. For detailed info see:
+<img align="right" src="docs/burn-up-chart.png">
 
-- [How to use the basic capabilities](https://niksilver.com/2015/06/15/easy-burn-up-chart/);
-- [More advanced functions](https://niksilver.com/2016/08/02/burn-up-charts-with-google-sheets/)..
+This is a set of functions and macros to allow easier creation of burn-up charts
+with Google Sheets.
 
 # Tl;dr
 
@@ -136,6 +135,8 @@ we re-estimate the story to be size 11 then we add a new row to
 reflect this. This new row is a straight copy of the original,
 but we change the size to be 11 and the date to be 25 March 2015.
 
+<img align="center" src="docs/changes.png">
+
 We can add our new row anywhere we like, but I prefer to keep any
 story change directly under its previous state. You might prefer
 to put changes in date order. It doesn’t matter. And if you
@@ -143,6 +144,8 @@ change your mind later you can always re-order or sort the rows
 differently. The important thing is to keep the header at the top.
 
 ## Creating the burn-up data
+
+<img align="right" src="docs/burn-up-data.png">
 
 Data for the burn-up chart is created from this historical data. In
 the original spreadsheet I’ve put it in its own sheet (Burn-up)
@@ -224,12 +227,16 @@ As you add more lines to the burn-up data make sure the burn-up
 chart references the latest data, including those new lines you’ve
 just added.
 
+<img align="center" src="docs/burn-up-chart.png">
+
 ## Top tip for greater reliability
 
 Although I’ve used a lot of words to describe this process, I
 hope that in practice you can see it’s pretty simple. But here’s
 another feature of `sumValid` that makes it even easier. Take a look
 at the other sheet, Burn-up with smarter formulas.
+
+<img align="right" src="docs/smarter-formulas.png">
 
 I’ve previously said that the first parameter of `sumValid` is the
 date we want to calculate a value for. But we can instead supply a
@@ -295,7 +302,9 @@ from the spreadsheet go to `Tools > Script editor`.
 To run the tests in the script editor, first make sure you've got `Tests 0 - All.gs` open
 and click the `Play` icon (a triangle) and then click `View > Logs`.
 
-## Useful references
+## References
 
 - [Google Apps Script reference for Sheets](https://developers.google.com/apps-script/reference/spreadsheet/)
+- [Original article on the basic capabilities](https://niksilver.com/2015/06/15/easy-burn-up-chart/);
+- [Original article on more advanced functions](https://niksilver.com/2016/08/02/burn-up-charts-with-google-sheets/).
 
