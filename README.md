@@ -261,7 +261,7 @@ story id 15 is missing, and if we look at the original spreadsheet
 we’ll see that’s because that story was introduced only at a
 later date.
 
-To achieve this we use a `getValid` forumula
+To generate this table we use a `getValid` forumula
 three times: once for the id, once for the name, and once for the
 estimate.
 
@@ -271,7 +271,7 @@ Here is the first formula:
 =getValid($B6, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Story ID")
 ```
 
-We only need to enter this on the first row of the column; the
+We only need to enter this on the first row of the first column; the
 the rest of the column will auto-fill with the results.
 
 The next two columns contain formulas that are identical except for the last parameter:
