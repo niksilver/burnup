@@ -1,9 +1,10 @@
 # What is this?
 
 This is a set of functions and macros to allow easier creation of burn-up charts
-with Google Sheets.
+with Google Sheets. You can use a commercial tool such as Jira and TFS, but
+sometimes you may want the flexibility and lightness of a spreadsheet.
 
-<img align="right" src="docs/burn-up-chart.png">
+<img align="right" src="docs/00-burn-up-chart.png">
 
 # Tl;dr
 
@@ -31,125 +32,89 @@ Then close the original and play around with your new burn-up spreadsheet.
 
 # Basic use
 
-Burn-up charts are a great way to demonstrate progress against
-(possibly changing) scope. And although the data needed to create
-such a chart is simple, if you also want to track the historical
-changes in the data (for tracing why things changed) then it’s
-surprisingly tricky.
+This section looks at creating and maintaining a burn-up chart. Later
+we will look at additional functions which may be useful for deeper
+analysis.
 
-If you’re working on a fairly big project then a specialised tool
-like Jira or TFS may well do the job for you. But if your project is
-more modest then the cost, setup and maintenance of such a tool may be excessive.
+## Create your spreadsheet
 
-This is a way of creating a burn-up chart with Google Sheets.
+<image align="right" src="docs/00-make-a-copy.png">
 
-## Overview
+The first thing you need is the basic spreadsheet.
 
-The core of process is two tables. The first is your historical
-data. This lists the user stories you’re tracking, as well as any
-changes for each story (such as its estimated size, or whether it’s
-done). The second table summarises the data. It has a list of dates,
-and for each date it shows the total done and total scope. And this
-table is the basis for the line chart that is our burn-up chart.
+  1. Open
+[my original spreadsheet](https://docs.google.com/spreadsheets/d/1NiK41B1cRxZ7RFlH-ylzcG1W5LduEf-dkzd048hM_fE/edit#gid=775539403).
+     This ensures you get all the functions.
+  1. Make your own copy with `File > Make a copy`
+  1. Rename the copy of your spreadsheet.
+  1. Close the original.
 
-Now for the details…
+You now have a spreadsheet with some sample data and charts, and
+(most importantly) all the specialised functions.
+You can fill this in with your own project data as you wish.
 
-## Setup
+## Basic principles
 
-<image align="right" src="docs/make-a-copy.png">
+The core of process is two tables.
 
-The first thing you need is the basic
-spreadsheet. You need to copy
-[my original spreadsheet](https://docs.google.com/spreadsheets/d/1NiK41B1cRxZ7RFlH-ylzcG1W5LduEf-dkzd048hM_fE/edit#gid=775539403)
-because it comes with a
-script. So go to the original sheet, click `File > Make a copy` and
-name it as you like. Then close the original.
+The first is your historical data, which is a
+list, or table, of all the user stories you’re tracking.
+A critical feature of this table is that every time a user
+story changes there is a new row for that change.
+This is why we call it "historical" data.
 
-You’ll see there several sheets including
-README, User stories and Burn-up. 
+The second table summarises the data. It has a list of dates,
+and for each date it shows the total done and total scope.
+From this data it's easy to generate a line chart that is our burn-up chart.
 
-If you would like see the code behind the sheet then you can go to
-`Tools > Script editor`.
+## The historical data
 
-Now we’ll walk through the the two tables, what they do, and how
-they work.
+In the original spreadsheet the historical data is in the tab
+called `User stories`. Here is a snippet:
 
-The User stories sheet contains a table of our historical data—that
-is, our user stories as they change over time.
+<img src="docs/01-historical-data.png">
 
-In the first instance each user story is just listed as a separate
-row in the table. Here are some columns you’ll want to include:
+The first most important thing to notice is the header row.
+The header row is needed because it will tell our functions
+which columns are which.
+
+The next most important thing to notice is that some stories
+appear repeated.
+For example, there are three instances of story 4, "Integrate with Muppex".
+This is essential to track changes: it shows the story was created, and then changed twice.
+Every time a story changes it must appear on its own line.
+
+You are mostly free to add whichever columns you like (whatever makes sense
+to you and your project) but there are two columns which are
+essential to tracking historical changes:
+
+- A unique ID for each story
+- A “valid from” date that says when the data in this row came into
+  effect---i.e. when the data changed.
+
+The unique ID ensures we can track the same story through several changes.
+The "valid from" column ensures we know when any particular change took place
+(i.e. when the data in that row was valid from).
+
+Of course, because we're tracking user stories progressing through a project
+there are some other columns, too:
 
 - The story’s title
 - Its size estimate
 - A Done flag (0 or blank is not done, 1 is done)
 - Its “done size” (which is the estimate multiplied by the Done flag—a very simple spreadsheet formula).
 
-The size and the “done size” are what go into the burn-up
-chart. They give us our Actual and Scope lines respectively.
+With all of this you have some freedom:
 
-<img align="center" src="docs/basic-data.png">
-
-But for this spreadsheet, as well as those obvious fields there are three things you must include:
-
-- A header row.
-- A unique ID for each story
-- A “valid from” date that says when the data in this row came into
-  effect---i.e. when the data changed.
-
-Let’s go into these in a bit more detail…
-
-The header row is needed because we’ll want to pick out individual
-columns later, and that will help us. You can call the columns
-anything you like, though.
-
-The unique ID is needed to distinguish each story. This will
-become important when we want to track the same story through
-several changes.
-
-The “valid from” column says when the data in this row became
-true. So if all our stories were created on 19 March 2015 then
-that’s the date that will go into that cell for every story. But
-if a new story gets created on 23 March 2015 then that’s the date
-that goes against that story.
-
-As mentioned above you can call the ID column and the “valid
-from” column anything you like. But they must each be labelled
-in the header row.
-
-So in summary: you must include a header row, an ID for each story
-and a “valid from” field. And you’ll also want to include
-all the usual data for tracking progress, including story size and
-total work done among others.
-
-## Tracking changes
-
-The historical data we’ve created so far is not very
-historical. It’s just a list a list of stories, some of which
-might have been added at a later date than others.
-
-But what if a story changes? The “done” status, the size,
-or something else might change.
-
-In this case we simply add a new row with its updated data. But
-when we do this we need to (i) keep the ID the same, and (ii) make
-sure the “valid from” date is the date on which this new state
-became true.
-
-For example, suppose story K729 has size 5 and was created on
-19 March 2015. Then that row appears in our table with ID K729
-and “valid from” date 19 March 2015. But if on 25 March 2015
-we re-estimate the story to be size 11 then we add a new row to
-reflect this. This new row is a straight copy of the original,
-but we change the size to be 11 and the date to be 25 March 2015.
-
-<img align="center" src="docs/changes.png">
-
-We can add our new row anywhere we like, but I prefer to keep any
-story change directly under its previous state. You might prefer
-to put changes in date order. It doesn’t matter. And if you
-change your mind later you can always re-order or sort the rows
-differently. The important thing is to keep the header at the top.
+- You can name the columns whatever you like, even the "unique ID" and "valid from"
+  columns.
+- The ID doesn't need to be an integer---it can be any string you like.
+  You might use something like `PBI-4635` or `2.13.8` or whatever.
+- When you add a new row to represent a change in a user story you can
+  add it wherever you like. It doesn't need to be under the previous
+  version (although that probably makes most sense).
+- You can re-order, sort and filter the data however you like,
+  as long as the header row stays at the top.
 
 ## Using the shortcut key
 
@@ -163,86 +128,80 @@ ones in.
 You can also find this function in the menus:
 `Tools > Macros > Duplicate row without dates`.
 
+## Tips for working with historical data
+
+- The historical data can include blank lines. But the first row must be the header row.
+- If you drop a user story from your project then you need to keep the historical
+  data and record this change. The simplest way to do this is probably to just set the
+  estimate of effort to zero.
+- You might want to record an epic then later break it down into smaller user stories.
+  The simplest way to do this is first record the epic as, say, 100 points of effort,
+  then later record a change to it becoming zero effort while also adding new user stories.
+  You can also exploit the fact that unique IDs can be any string you like, so an
+  epic with ID 23 might decompose into user stories with IDs 23.1, 23.2, etc.
+
 ## Creating the burn-up data
 
-<img align="right" src="docs/burn-up-data.png">
-
-Data for the burn-up chart is created from this historical data. In
-the original spreadsheet I’ve put it in its own sheet (Burn-up)
+Data for the burn-up chart is created from this historical data.
+In the original spreadsheet this appears in its own sheet, `Burn-up`,
 to keep things tidy.
 
 The burn-up data is a table with two or more columns, depending
-on what we want to chart. The first column represents the x-axis,
-and is a series of dates. If our project starts on 19 March 2015
-then this column lists 19 March 2015, 20 March, 21 March, and so
-on to today’s date.
+on what you want to chart.
 
-The second and subsequent columns are for each line we want to plot
-on the burn-up chart. This is where our special script comes in.
+<img align="right" src="docs/02-burn-up-data.png">
 
-So let’s say we want to show “scope” in the second column. We
-need a function that sums all the “size estimate” cells in
-the historical data, but only as the data stood on the given date
-(19 March, then 20 March, etc).
+The first column represents the x-axis, and is a series of dates.
+We enter these dates ourselves.
+The remaining columns are for each line we want to plot
+on the burn-up chart. They are all calculations.
 
-This is a new function, `sumValid`, which is created by the script
-behind the spreadsheet. It takes the following parameters:
+So let’s say you want to show "scope" in the second column. You
+need a function that sums all the "size estimate" cells in
+the historical data, but only as the data stood on each given date.
 
-- the dates we’re currently interested in (as a column);
-- the entire historical data table, including its header; and finally
-- the names in the header row for the ID, the “valid from” date and the
-  “size estimate” columns respectively.
+This is a new function, `sumValid`.
+It takes the following parameters:
+
+- the dates we’re currently interested in;
+- the entire historical data table, including the header row;
+- the names in the header row for
+  - the ID,
+  - the “valid from” date and
+  - the “size estimate”.
 
 With this formula we’re saying: sum all the data that’s valid
 at the specified dates, where this is the historical data and we
 can pick out each story, when it changed, and where this is the
-data to add up.
+data to add up. In the original spreadsheet it looks like this:
 
-<img align="center" src="docs/smarter-formulas.png">
+```
+=sumValid($A11:$A24, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Estimate")
+```
 
-`sumValid` will go down and
-fill in the values for all the dates. We must make sure those
+You enter this formula into just the first cell at the top of the column.
+`sumValid` will go down and fill in the values for all the dates.
+You must make sure those
 cells are blank though---only then can it fill them in; if not it
 will give a `#REF!` error.
 
-
-So if `A11:A24` contains the dates we want to chart in our
-Burn-up sheet, and `A6:F29`
-is our historical data in the User stories sheet,
-then for calculating the scope for all those dates
-we might have a formula that reads:
+We can track the work done in the third column.
+For this our formula is almost identical, but now we want to
+sum the "Work done" data, instead. So it looks like this.
+Just the last parameter has changed:
 
 ```
-=sumValid(A11:A24, 'User stories'!A6:F29, “Story ID”, “Valid from”, “Estimate”)
+=sumValid($A11:$A24, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Total work done")
 ```
 
-Now let’s suppose for the third column of the burn-up data we want
-to calculate work done as it was on each day.
-This is will the burning-up line on our chart.
-For this we use exactly
-the same formula, but this time the last parameter is “Work done”
-(or whatever we’ve called the column in the historical data).
-
-So for the first cell in the third column our formula might read:
-
-```
-=sumValid(A11:A24, 'User stories'!A6:F29, “Story ID”, “Valid from”, “Work done”)
-```
-
-Once again the `sumValid` formula will fill in the values all the way down.
-
-Don't forget to uses `$` signs approprately if you're copying forumulas.
+Notice the use of `$` signs in the formulas to allow us to copy the formula easily.
 
 ## The burn-up chart
 
-Now the burn-up chart is easy. We just create a line chart from
-the burn-up data we’ve just created.
+Now the burn-up chart is easy. You just create a line chart from
+the burn-up data you’ve just created.
 
-As you add more lines to the burn-up data make sure the burn-up
-chart references the latest data, including those new lines you’ve
-just added.
-
-<img align="center" src="docs/burn-up-chart.png">
+<img src="docs/00-burn-up-chart.png">
 
 ## More tips and tricks
 
@@ -256,7 +215,6 @@ Here are some other details that might be of interest...
   - Referencing a column in the historical data which doesn’t exist
    (e.g. you say “ID” but the header says “Story ID”);
   - a line in the historical data has missing ID or a missing “valid from” date.
-- The historical data can include blank lines. But the first row must be the header row.
 - As your project develops your historical data will grow.
   So make sure the `sumValid` formulas encompass the latest historical data.
 
@@ -266,7 +224,7 @@ Here are some other details that might be of interest...
 As well as `sumValid` there are some functions
 intended to help you get a better view of the work in progress at any moment in time.
 
-## Get all values for a given date
+## `getValid`: Get all values for a given date
 
 This is useful if we want to get an easy view of our work as it
 was on any particular date. This can be a bit tricky normally,
@@ -283,7 +241,9 @@ all the values of a given field". The parameters are:
   - the column name of the date from which this row’s data is valid;
 - The column name of the field we want to show.
 
-Here’s an example from the demo spreadsheet. You can find it in the tab named Listing example.
+Here’s an example from the original spreadsheet. You can find it in the tab named Listing example.
+
+*** HERE ***
 
 Our raw data looks like this:
 
