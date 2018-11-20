@@ -14,6 +14,8 @@ Simply go to
 make your own copy using `File > Make a copy`, and name it as you like.
 Then close the original and play around with your new burn-up spreadsheet.
 
+# Contents
+
 - [Basic use](#basic-use)
   - [Create our spreadsheet](#create-our-spreadsheet)
   - [Basic principles](#basic-principles)
@@ -46,8 +48,7 @@ analysis.
 The first thing we need is the basic spreadsheet.
 
   1. Open
-[my original spreadsheet](https://docs.google.com/spreadsheets/d/1NiK41B1cRxZ7RFlH-ylzcG1W5LduEf-dkzd048hM_fE/edit#gid=775539403).
-     This ensures we get all the functions.
+[the original spreadsheet](https://docs.google.com/spreadsheets/d/1NiK41B1cRxZ7RFlH-ylzcG1W5LduEf-dkzd048hM_fE/edit#gid=775539403).
   1. Make our own copy with `File > Make a copy`
   1. Rename the copy of our spreadsheet.
   1. Close the original.
@@ -141,9 +142,11 @@ We can also find this function in the menus:
   The simplest way to do this is first record the epic as, say, 100 points of effort,
   then later record a change to it becoming zero effort while also adding new user stories.
   We can also exploit the fact that unique IDs can be any string we like, so an
-  epic with ID 23 might decompose into user stories with IDs 23.1, 23.2, etc.
+  epic with ID 23 might decompose into user stories 23.1, 23.2, etc.
 
 ## Creating the burn-up data
+
+<img align="right" src="docs/02-burn-up-data.png">
 
 Data for the burn-up chart is created from this historical data.
 In the original spreadsheet this appears in its own sheet, `Burn-up`,
@@ -152,10 +155,11 @@ to keep things tidy.
 The burn-up data is a table with two or more columns, depending
 on what we want to chart.
 
-<img align="right" src="docs/02-burn-up-data.png">
-
 The first column represents the x-axis, and is a series of dates.
-We enter these dates ourselves.
+We enter these dates ourselves. The dates don't have to be
+consecutive days. We can increment the dates by week or fortnight
+or anything else.
+
 The remaining columns are for each line we want to plot
 on the burn-up chart. They are all calculations.
 
@@ -217,15 +221,15 @@ Here are some other details that might be of interest...
   cause errors include:
   - Referencing a column in the historical data which doesn’t exist
    (e.g. we say “ID” but the header says “Story ID”);
-  - a line in the historical data has missing ID or a missing “valid from” date.
+  - a line in the historical data has a missing ID or a missing “valid from” date.
 - As our project develops our historical data will grow.
   So make sure the `sumValid` formulas encompass the latest historical data.
 
 
 # Further functions
 
-As well as `sumValid` there are some functions
-intended to help us get a better view of the work in progress at any moment in time.
+As well as `sumValid` there are some other functions
+to help us get a better view of the work in progress at any moment in time.
 
 ## `getValid`: Get data for a given date
 
@@ -242,33 +246,32 @@ all the values of a given field". The parameters are:
   - the column name of the date from which this row’s data is valid;
 - The column name of the field we want to show.
 
-Here’s an example from the original spreadsheet.
-We can find it in the tab named `Listing example`.
-
 Let’s suppose we want to
 see the stories that were known on 21 June 2016. In particular
 we decide we want to list three fields: the story id, its name,
-and its estimate. That means we want to use a `getValid` forumula
-three times: once for the id, once for the name, and once for the
-estimate.
+and its estimate.
 
-The resulting table will look like this:
+The resulting table will look like this, found in the `Listing example`
+tab in the original spreadsheet:
 
-<img src="docs/03-get-filter-result.png">
+<img src="docs/03-getfilter-result.png">
 
 Notice that
 story id 15 is missing, and if we look at the original spreadsheet
 we’ll see that’s because that story was introduced only at a
 later date.
 
-To create this,
-there is one formula for each column. Here is the first one:
+To achieve this we use a `getValid` forumula
+three times: once for the id, once for the name, and once for the
+estimate.
+
+Here is the first formula:
 
 ```
 =getValid($B6, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Story ID")
 ```
 
-We only need to enter this on the first row of the first column; the
+We only need to enter this on the first row of the column; the
 the rest of the column will auto-fill with the results.
 
 The next two columns contain formulas that are identical except for the last parameter:
