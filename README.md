@@ -226,10 +226,8 @@ intended to help you get a better view of the work in progress at any moment in 
 
 ## `getValid`: Get all values for a given date
 
-This is useful if we want to get an easy view of our work as it
-was on any particular date. This can be a bit tricky normally,
-because the raw data lists every version of every user story,
-and different stories will change on different dates.
+This function gets us a view of our work as it
+was on any particular date.
 
 The function `getValid` effectively says "For a given date get
 all the values of a given field". The parameters are:
@@ -241,45 +239,56 @@ all the values of a given field". The parameters are:
   - the column name of the date from which this row’s data is valid;
 - The column name of the field we want to show.
 
-Here’s an example from the original spreadsheet. You can find it in the tab named Listing example.
-
-*** HERE ***
-
-Our raw data looks like this:
-
-<img align="center" src="docs/1-raw-data.png">
+Here’s an example from the original spreadsheet.
+You can find it in the tab named `Listing example`.
 
 Let’s suppose we want to
-see the stories that were known on 29 June 2016. In particular
+see the stories that were known on 21 June 2016. In particular
 we decide we want to list three fields: the story id, its name,
 and its estimate. That means we want to use a `getValid` forumula
 three times: once for the id, once for the name, and once for the
-estimate. Here’s what the first formula looks like:
+estimate.
 
-<img align="center" src="docs/2-getvalid-for-id.png">
+The resulting table will look like this:
 
-The formula itself uses the parameters we gave above: the date in
-question, the details of the raw data (which happen to be in a named
-range: `StoryDim`), and the name of the column we’re interested
-in---in this case Story ID. That cell, and all the cells below it,
-then fill up with all the story ids known on that date. Notice that
+<img src="docs/03-get-filter-result.png">
+
+Notice that
 story id 15 is missing, and if you look at the original spreadsheet
 you’ll see that’s because that story was introduced only at a
 later date.
 
+To create this,
+there is one formula for each column. Here is the first one:
+
+```
+=getValid($B6, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Story ID")
+```
+
+We only need to enter this on the first row of the first column; the
+the rest of the column will auto-fill with the results.
+
+The formula itself uses the parameters we gave above: the date in
+question (`B6`), a reference to the historical data (and we must
+say which columns contain the unique ID and "valid from" data),
+and the name of the column we’re interested
+in---in this case Story ID.
+
 The next two columns contain formulas that are identical except for the last parameter:
 
-<img align="center" src="docs/3-getvalid-for-name.png">
+```
+=getValid($B6, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Description")
+```
 
 and
 
-<img align="center" src="docs/4-getvalid-for-estimate.png">
+```
+=getValid($B6, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Estimate")
+```
 
-Because all the formulas use the same data and the same date their
-outputs line up. So we can be sure (for example) that story id 4
-("Integrate with Muppex") was estimated as size 1 on the date
-in question. But if you change the date to 26 June or later then
-you’ll see its estimate changes.
+When creating this table we need to be sure that all three formulas
+use the same date and the same data. Otherwise the data in the
+rows will not line up.
 
 ## Filter values for a given date
 
