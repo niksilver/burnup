@@ -325,7 +325,7 @@ first column, showing the ID, is this:
 =filterValid($B7, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Story ID", "Is done?", 0)
 ```
 
-For the second column, with the showing the description of the story, it's
+For the second column, showing the description of the story, it's
 the same except for one field:
 
 ```
