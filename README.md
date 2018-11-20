@@ -5,7 +5,7 @@ to allow easier creation of burn-up charts.
 You can use a commercial tool such as Jira and TFS, but
 sometimes you may want the flexibility and lightness of a spreadsheet.
 
-<img align="right" src="docs/00-make-a-copy.png">
+<img align="right" src="docs/00-burn-up-chart.png">
 
 # Tl;dr
 
@@ -41,7 +41,7 @@ analysis.
 
 ## Create our spreadsheet
 
-<img align="right" src="docs/00-burn-up-chart.png">
+<img align="right" src="docs/00-make-a-copy.png">
 
 The first thing we need is the basic spreadsheet.
 
