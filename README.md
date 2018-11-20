@@ -14,18 +14,20 @@ make your own copy using `File > Make a copy`, and name it as you like.
 Then close the original and play around with your new burn-up spreadsheet.
 
 - [Basic use](#basic-use)
-  - [Overview](#overview)
-  - [Setup](#setup)
-  - [Tracking changes](#tracking-changes)
+  - [Create your spreadsheet](#create-your-spreadsheet)
+  - [Basic principles](#basic-principles)
+  - [The historical data](#the-historical-data)
   - [Using the shortcut key](#using-the-shortcut-key)
+  - [Tips for working with historical data](#tips-for-working-with-historical-data)
   - [Creating the burn-up data](#creating-the-burn-up-data)
   - [The burn-up chart](#the-burn-up-chart)
   - [More tips and tricks](#more-tips-and-tricks)
 - [Further functions](#further-functions)
-  - [Get all values for a given date](#get-all-values-for-a-given-date)
-  - [Filter values for a given date](#filter-values-for-a-given-date)
+  - [`getValid`: Get data for a given date](#getvalid-get-data-for-a-given-date)
+  - [`filterValid`: Filter data for a given date](#filtervalid-filter-data-for-a-given-date)
   - [Tip: Extra fields for better filtering](#tip-extra-fields-for-better-filtering)
 - [Developing](#developing)
+  - [Setup](#setup)
   - [Working with the code](#working-with-the-code)
   - [Running the tests](#running-the-tests)
 - [References](#references)
@@ -224,7 +226,7 @@ Here are some other details that might be of interest...
 As well as `sumValid` there are some functions
 intended to help you get a better view of the work in progress at any moment in time.
 
-## `getValid`: Get all values for a given date
+## `getValid`: Get data for a given date
 
 This function gets us a view of our work as it
 was on any particular date.
@@ -233,7 +235,7 @@ The function `getValid` effectively says "For a given date get
 all the values of a given field". The parameters are:
 
 - The date in question;
-- Three parameters specifying the raw data:
+- Three parameters specifying the historial data:
   - the range of the data (including the header row),
   - the column name of the story ID,
   - the column name of the date from which this row’s data is valid;
@@ -268,12 +270,6 @@ there is one formula for each column. Here is the first one:
 We only need to enter this on the first row of the first column; the
 the rest of the column will auto-fill with the results.
 
-The formula itself uses the parameters we gave above: the date in
-question (`B6`), a reference to the historical data (and we must
-say which columns contain the unique ID and "valid from" data),
-and the name of the column we’re interested
-in---in this case Story ID.
-
 The next two columns contain formulas that are identical except for the last parameter:
 
 ```
@@ -290,40 +286,57 @@ When creating this table we need to be sure that all three formulas
 use the same date and the same data. Otherwise the data in the
 rows will not line up.
 
-## Filter values for a given date
+## `filterValid`: Filter data for a given date
 
-Just getting the data is often good enough. But sometimes we want
-a filtered view. For example you might want to see all stories that
-weren’t yet done on a given date. While you can put a spreadsheet
-filter on the `getValid` results you can also use a dedicated
+While we can put a spreadsheet
+filter on the `getValid` results above, we can also use a dedicated
 formula: `filterValid`. This effectively says "For a given date get
-all the values of a given field, but filtered down to just those
+all the values of a given field
 where a certain condition is met".
 
-The parameters for `filterValid` are just the same as before, but
+The parameters for `filterValid` are just the same as for `getValid`, but
 there are two extra ones at the end:
 
 - The date in question;
-- Three parameters specifying the raw data:
-  - the area of the data (including the header row),
+- Three parameters specifying the historial data:
+  - the range of the data (including the header row),
   - the column name of the story ID,
-  - the column name of the date from which this row’s data is valid;
+  - the column name of the "valid from" field;
 - The column name of the field we want to show;
 - The column name of the field we want to test;
 - The value that this field must be in order to pass the test.
 
 For example, if we want to show only those stories that weren’t
 done on a given date then we might test the Is done? field for
-value 0. We can see this in the demo spreadsheet in the tab named
-Filtering example:
+value 0. We can see the results in the original spreadsheet in the tab named
+`Filtering example`:
 
-<img align="center" src="docs/5-filtervalid-for-id.png">
+<img src="docs/04-filtervalid-results.png">
 
-The two cells next to it again have exactly the same formula,
-except the fifth parameter is replaced each time to show a different
-field (again: the name and the estimate). Obviously you can show
-any field(s) you like. In the screenshot above you can see some
-stories are missing: they are the ones that have been done.
+Once again there is one formula at the top of each column; the
+function will fill in all the results below. The formula for the
+first column, showing the ID, is this:
+
+```
+=filterValid($B7, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Story ID", "Is done?", 0)
+```
+
+For the second column, with the showing the description of the story, it's
+the same except for one field:
+
+```
+=filterValid($B7, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Description", "Is done?", 0)
+```
+
+and to show the size estimate it's this at the top of the last column:
+
+```
+=filterValid($B7, 'User stories'!$A9:$G32, "Story ID", "Valid from", "Estimate", "Is done?", 0)
+```
+
+Once again, when creating this table we need to be sure that all three formulas
+use the same date and the same data to make sure the data in the rows
+all line up.
 
 ## Tip: Extra fields for better filtering
 
