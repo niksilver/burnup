@@ -5,7 +5,7 @@ to allow easier creation of burn-up charts.
 You can use a commercial tool such as Jira and TFS, but
 sometimes you may want the flexibility and lightness of a spreadsheet.
 
-<img align="right" src="docs/00-burn-up-chart.png">
+<img align="right" src="docs/00-burn-up-chart-small.png">
 
 # Tl;dr
 
@@ -204,7 +204,7 @@ Notice the use of `$` signs in the formulas to allow us to copy the formula easi
 Now the burn-up chart is easy. We simply create a line chart from
 the burn-up data we’ve just created.
 
-<img src="docs/00-burn-up-chart.png">
+<img src="docs/02-burn-up-chart.png">
 
 ## More tips and tricks
 
