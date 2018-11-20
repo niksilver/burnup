@@ -5,7 +5,7 @@ to allow easier creation of burn-up charts.
 You can use a commercial tool such as Jira and TFS, but
 sometimes you may want the flexibility and lightness of a spreadsheet.
 
-<img align="right" src="docs/00-burn-up-chart.png">
+<image align="right" src="docs/00-burn-up-chart.png">
 
 # Tl;dr
 
