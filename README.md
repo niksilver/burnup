@@ -1,11 +1,11 @@
 # What is this?
 
-<img align="right" src="docs/00-burn-up-chart.png">
-
 This is a set of functions and macros for Google Sheets
 to allow easier creation of burn-up charts.
 You can use a commercial tool such as Jira and TFS, but
 sometimes you may want the flexibility and lightness of a spreadsheet.
+
+<img align="right" src="docs/00-make-a-copy.png">
 
 # Tl;dr
 
@@ -41,7 +41,7 @@ analysis.
 
 ## Create our spreadsheet
 
-<img align="right" src="docs/00-make-a-copy.png">
+<img align="right" src="docs/00-burn-up-chart.png">
 
 The first thing we need is the basic spreadsheet.
 
