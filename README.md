@@ -17,7 +17,7 @@ Then close the original and play around with your new burn-up spreadsheet.
 # Contents
 
 - [Basic use](#basic-use)
-  - [Create our spreadsheet](#create-our-spreadsheet)
+  - [Create the spreadsheet](#create-the-spreadsheet)
   - [Basic principles](#basic-principles)
   - [The historical data](#the-historical-data)
   - [Using the shortcut key](#using-the-shortcut-key)
@@ -41,7 +41,7 @@ This section looks at creating and maintaining a burn-up chart. Later
 we will look at additional functions which may be useful for deeper
 analysis.
 
-## Create our spreadsheet
+## Create the spreadsheet
 
 <img align="right" src="docs/00-make-a-copy.png">
 
